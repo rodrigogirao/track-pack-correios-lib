@@ -1,1 +1,3 @@
-console.log("Hello World from Brazil!");
+import scraper from "./services/scraper";
+
+scraper;

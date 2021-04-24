@@ -1,6 +1,8 @@
 import axios from "axios";
 
 const Api = {
-  getTrack: (trackCode: string) =>
-    axios.get(`https://rastreamentocorreios.info/consulta/${trackCode}`),
+  getTrack: (trackCode: string): any =>
+    axios.get(`https://www.websro.com.br/detalhes.php?P_COD_UNI=${trackCode}`),
 };
+
+export default Api;
