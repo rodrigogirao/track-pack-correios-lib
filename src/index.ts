@@ -1,3 +1,3 @@
 import scraper from "./services/scraper";
 
-scraper;
+scraper("NX034780583BR");
