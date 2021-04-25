@@ -44,4 +44,5 @@ Temporary Items
 
 node_modules
 dist
+coverage
 # End of https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode
