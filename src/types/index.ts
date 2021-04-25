@@ -1,4 +1,4 @@
-type Track = {
+type TrackData = {
   date: string;
   time: string;
   city: string;
@@ -7,4 +7,4 @@ type Track = {
   info: string;
 };
 
-export default Track;
+export default TrackData;

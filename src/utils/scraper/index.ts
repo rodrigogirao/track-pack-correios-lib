@@ -1,11 +1,10 @@
 import cheerio, { Cheerio } from "cheerio";
-import Api from "../api";
-import Track from "../../types/scrapper";
+import TrackData from "../../types";
 
-const websroScraper = (html: any): Track[] => {
+const websroScraper = (html: any): TrackData[] => {
   const $ = cheerio.load(html);
   const trackTable: Cheerio = $("tbody > tr");
-  const trackSteps: Track[] = [];
+  const trackSteps: TrackData[] = [];
   trackTable.each((i, element) => {
     const firstColumn = $(element).find("td").first();
     const date = $(firstColumn[0].childNodes[0]).text();
@@ -25,7 +24,4 @@ const websroScraper = (html: any): Track[] => {
   return trackSteps;
 };
 
-const scraper = (trackCode: string): Track[] =>
-  Api.getTrack(trackCode).then((response: any) => websroScraper(response.data));
-
-export default scraper;
+export { websroScraper };

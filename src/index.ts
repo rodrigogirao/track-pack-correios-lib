@@ -1,3 +1,1 @@
-import scraper from "./services/scraper";
-
-scraper("NX034780583BR");
+export { default as track } from "./services/track";
