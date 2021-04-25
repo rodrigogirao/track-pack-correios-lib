@@ -1,1 +1,1 @@
-console.log("Hello World from Brazil!");
+export { default as track } from "./services/track";
