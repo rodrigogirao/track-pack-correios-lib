@@ -3,11 +3,14 @@ orbs:
   node: circleci/node@4.3.0
 jobs:
   build:
-    executor:
-      name: node/default
-      tag: "16"
+    executor: node/default
     steps:
       - checkout
       - run: yarn install
       - run: yarn build
       - run: yarn test
+
+workflows:
+  build-and-test:
+    jobs:
+      - build
