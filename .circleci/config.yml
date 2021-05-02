@@ -7,8 +7,23 @@ jobs:
     steps:
       - checkout
       - run: yarn install
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+            ./cc-test-reporter before-build
       - run: yarn build
-      - run: yarn test
+      - run: yarn test:coverage
+      - run:
+          name: Upload coverage to Code Climate
+          command: ./cc-test-reporter after-build -t lcov
+      - run:
+          name: Upload coverage to Codacy
+          command: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage/lcov.info
+      - run:
+          name: Upload coverage to Codecov
+          command: bash <(curl -s https://codecov.io/bash)
 
 workflows:
   build-and-test:
