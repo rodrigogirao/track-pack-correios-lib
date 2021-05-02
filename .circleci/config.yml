@@ -21,6 +21,9 @@ jobs:
       - run:
           name: Upload coverage to Codacy
           command: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage/lcov.info
+      - run:
+          name: Upload coverage to Codecov
+          command: bash <(curl -s https://codecov.io/bash)
 
 workflows:
   build-and-test:
