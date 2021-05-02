@@ -1,0 +1,1 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/c7ea843b598d401594e9fc135d46abd9)](https://www.codacy.com/gh/rodrigogirao/track-pack-correios-lib/dashboard?utm_source=github.com&utm_medium=referral&utm_content=rodrigogirao/track-pack-correios-lib&utm_campaign=Badge_Grade)

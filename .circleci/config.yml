@@ -18,6 +18,9 @@ jobs:
       - run:
           name: Upload coverage to Code Climate
           command: ./cc-test-reporter after-build -t lcov
+      - run:
+          name: Upload coverage to Codacy
+          command: bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage/lcov.info
 
 workflows:
   build-and-test:
