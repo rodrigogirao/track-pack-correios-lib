@@ -1,11 +1,18 @@
 version: 2.1
 orbs:
   node: circleci/node@4.3.0
+
+defaults: &defaults
+  working_directory: ~/repo
+  executor: node/default
+
 jobs:
-  build:
-    executor: node/default
+  test:
+    <<: *defaults
     steps:
       - checkout
+      - restore_cache:
+          key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn install
       - run:
           name: Setup Code Climate test-reporter
@@ -13,7 +20,6 @@ jobs:
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
             ./cc-test-reporter before-build
-      - run: yarn build
       - run: yarn test:coverage
       - run:
           name: Upload coverage to Code Climate
@@ -24,8 +30,43 @@ jobs:
       - run:
           name: Upload coverage to Codecov
           command: bash <(curl -s https://codecov.io/bash)
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+
+  deploy-npm:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+      - run:
+          name: Publish package
+          command: yarn publish
 
 workflows:
-  build-and-test:
+  test:
     jobs:
-      - build
+      - test:
+        filters:
+          tags:
+            ignore: /.*/
+
+  test-deploy:
+    jobs:
+      - test:
+          filters: &deploy_tag
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - deploy-npm:
+          requires:
+            - test
+          filters: *deploy_tag

@@ -1,6 +1,6 @@
 {
   "name": "track-pack-correios-lib",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A scrapper package to get package tracking from Brazilian post offices (correios)",
   "main": "src/index.ts",
   "repository": "git@github.com:rodrigogirao/track-pack-correios-lib.git",
