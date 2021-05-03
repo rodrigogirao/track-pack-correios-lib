@@ -1,8 +1,8 @@
-name: Build
+name: Deploy
 on:
   push:
-    tags:
-      - v*
+    # tags:
+    #   - v*
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -12,7 +12,10 @@ jobs:
         with:
           node-version: "16"
       - run: yarn install
-      - run: yarn build
-      - run: yarn test
-      - run: echo "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN" > .npmrc
+      # - run: yarn build
+      # - run: yarn test
+      - run: echo "@rodrigogirao:registry=https://npm.pkg.github.com" > .npmrc
+      - run: pwd
+      - run: cat package.json
+      - run: cat .npmrc
       - run: yarn publish
